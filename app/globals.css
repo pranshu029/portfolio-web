@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 5%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 7%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 47% 5%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 186 100% 53%;
+  --primary-foreground: 222 47% 5%;
+  --secondary: 236 32% 15%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 220 28% 16%;
+  --muted-foreground: 217 17% 68%;
+  --accent: 186 100% 53%;
+  --accent-foreground: 222 47% 5%;
+  --border: 220 28% 18%;
+  --input: 220 28% 18%;
+  --ring: 186 100% 53%;
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(99, 102, 241, 0.16), transparent 24%),
+      radial-gradient(circle at top right, rgba(34, 211, 238, 0.1), transparent 22%),
+      radial-gradient(circle at bottom, rgba(236, 72, 153, 0.06), transparent 18%),
+      hsl(var(--background));
+  }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.25);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid hsl(var(--background));
+    border-radius: 9999px;
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.8), rgba(34, 211, 238, 0.8));
+  }
+
+  a {
+    @apply transition-colors;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass-panel {
+    @apply border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_24px_80px_rgba(2,6,23,0.55)];
+  }
+
+  .section-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+/* Smooth transitions for theme changes */
+html, body, .glass-panel, .rounded-2xl, .rounded-3xl, .card, .card * {
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
