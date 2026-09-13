@@ -27,7 +27,8 @@ import {
   SiSpringsecurity,
   SiVercel,
   SiCplusplus,
-  SiGithub
+  SiGithub,
+  SiSocket
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
@@ -40,6 +41,7 @@ const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   'Spring Boot': SiSpringboot,
   'Spring Security': SiSpringsecurity,
   'REST APIs': FaNetworkWired,
+  WebSocket: SiSocket,
   Hibernate: SiHibernate,
   'Spring Data JPA': FaDatabase,
   MySQL: SiMysql,

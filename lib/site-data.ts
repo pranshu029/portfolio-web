@@ -44,7 +44,7 @@ export const skills = [
   },
   {
     title: 'Backend',
-    items: ['Spring Boot', 'Spring Security', 'REST APIs', 'Hibernate', 'Spring Data JPA']
+    items: ['Spring Boot', 'Spring Security', 'REST APIs', 'WebSocket', 'Hibernate', 'Spring Data JPA']
   },
   {
     title: 'Databases',
@@ -72,7 +72,22 @@ export const projects = [
       'React frontend with live output streaming'
     ],
     tags: ['Java', 'Spring Boot', 'React', 'Docker'],
-    accent: 'from-indigo-500/30 via-cyan-400/10 to-fuchsia-500/10'
+    accent: 'from-indigo-500/30 via-cyan-400/10 to-fuchsia-500/10',
+    url: 'https://github.com/pranshu029/CodeEngineBackend'
+  },
+  {
+    name: 'Connecto Backend',
+    description:
+      'A backend for community-driven interactions, user profiles, and connection-based features built with scalable Spring Boot services.',
+    highlights: [
+      'Secure user authentication and profile APIs',
+      'Connection and social interaction flows',
+      'MySQL-backed data modeling and persistence',
+      'Clean REST architecture for a growing product'
+    ],
+    tags: ['Java', 'Spring Boot', 'MySQL', 'REST APIs'],
+    accent: 'from-emerald-500/30 via-teal-400/10 to-cyan-500/10',
+    url: 'https://github.com/pranshu029/connectoBackend'
   },
   {
     name: 'Qora Backend',
@@ -85,7 +100,22 @@ export const projects = [
       'REST APIs with global exception handling'
     ],
     tags: ['Java', 'Spring Boot', 'MySQL', 'REST APIs'],
-    accent: 'from-cyan-400/25 via-slate-400/10 to-violet-500/10'
+    accent: 'from-cyan-400/25 via-slate-400/10 to-violet-500/10',
+    url: 'https://github.com/pranshu029/QuoraBackend'
+  },
+  {
+    name: 'OTP Verification',
+    description:
+      'A secure OTP verification flow using Gmail SMTP, JavaMailSender, and a lightweight frontend for email-based authentication.',
+    highlights: [
+      'OTP generation, expiry, and one-time use logic',
+      'Gmail SMTP email delivery with JavaMailSender',
+      'REST APIs for verify and resend flows',
+      'Simple HTML/CSS/JS client for demo usage'
+    ],
+    tags: ['Java', 'Spring Boot', 'SMTP', 'REST APIs'],
+    accent: 'from-amber-500/25 via-orange-400/10 to-pink-500/10',
+    url: 'https://github.com/pranshu029/otp-verification-project'
   }
 ];
 
