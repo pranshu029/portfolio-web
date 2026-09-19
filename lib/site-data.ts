@@ -120,9 +120,9 @@ export const projects = [
 ];
 
 export const dsaPlatforms = [
-  { name: 'LeetCode', subtitle: 'Arrays · Trees · DP · Graphs', tone: 'from-amber-400/30 to-orange-500/10' },
-  { name: 'GeeksforGeeks', subtitle: 'Algorithms · Data Structures · Coding', tone: 'from-emerald-400/25 to-green-500/10' },
-  { name: 'CodeChef', subtitle: 'Contests · Challenges · Practice', tone: 'from-violet-400/25 to-indigo-500/10' }
+  { name: 'LeetCode', subtitle: 'Arrays · Trees · DP · Graphs', tone: 'from-amber-400/30 to-orange-500/10', url: 'https://leetcode.com/u/Pranshu_Dwivedi29/' },
+  { name: 'GeeksforGeeks', subtitle: 'Algorithms · Data Structures · Coding', tone: 'from-emerald-400/25 to-green-500/10', url: 'https://www.geeksforgeeks.org/profile/pranshu11?tab=activity' },
+  { name: 'CodeChef', subtitle: 'Contests · Challenges · Practice', tone: 'from-violet-400/25 to-indigo-500/10', url: 'https://www.codechef.com/users/pranshu_dwivedi29' }
 ];
 
 export const achievements = [

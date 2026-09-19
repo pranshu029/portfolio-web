@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -14,8 +14,6 @@ import {
   Mail,
   MapPin,
   Menu,
-  Eye,
-  ChevronDown,
   Rocket,
   TerminalSquare
 } from 'lucide-react';
@@ -156,75 +154,18 @@ function MobileNav({ onNavigate }: { onNavigate: () => void }) {
 }
 
 function ResumeMenu({ stacked = false, onNavigate }: { stacked?: boolean; onNavigate?: () => void }) {
-  const [open, setOpen] = React.useState(false);
-  const menuRef = React.useRef<HTMLDivElement | null>(null);
-
-  React.useEffect(() => {
-    const handlePointerDown = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handlePointerDown);
-    return () => document.removeEventListener('mousedown', handlePointerDown);
-  }, []);
-
-  const trigger = (
-    <Button
-      type="button"
-      variant="outline"
-      size={stacked ? 'lg' : 'sm'}
-      className={`${stacked ? 'w-full justify-between border-white/10 bg-white/5' : 'border-white/10 bg-white/5'} ${open ? 'border-cyan-300/40' : ''}`}
-      onClick={() => setOpen((v) => !v)}
-      aria-haspopup="menu"
-      aria-expanded={open}
-    >
-      Resume
-      <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} />
-    </Button>
-  );
-
   return (
-    <div ref={menuRef} className={stacked ? 'flex w-full flex-col items-stretch' : 'relative inline-flex'} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-      {trigger}
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.98 }}
-            transition={{ duration: 0.18 }}
-            className={`${stacked ? 'relative mt-3 w-full' : 'absolute left-full top-0 z-50 ml-3 min-w-64 origin-left-top'} rounded-3xl border border-white/10 bg-slate-950/95 p-2 shadow-[0_24px_80px_rgba(2,6,23,0.75)] backdrop-blur-2xl`}
-            style={{ maxHeight: '60vh', overflow: 'auto' }}
-          >
-            <div className="grid gap-2">
-              <Button asChild variant="outline" className="justify-start border-white/10 bg-white/5">
-                <a
-                  href={resumeUrl}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onNavigate) onNavigate();
-                    window.open(resumeUrl, '_blank', 'noopener');
-                  }}
-                  rel="noreferrer"
-                >
-                  View Resume
-                  <Eye className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-
-              <Button asChild className="justify-start">
-                <a href={resumeUrl} download onClick={onNavigate}>
-                  Download Resume
-                  <Download className="ml-2 h-4 w-4 text-white/90" />
-                </a>
-              </Button>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </div>
+    <Button
+      asChild
+      variant="outline"
+      size="lg"
+      className={`${stacked ? 'w-full sm:w-auto' : ''} h-12 min-w-[8rem] justify-center border-white/10 bg-white/5`}
+    >
+      <a href={resumeUrl} download="Pranshu Dwivedi Resume.pdf" onClick={onNavigate}>
+        Resume
+        <Download className="ml-2 h-4 w-4" />
+      </a>
+    </Button>
   );
 }
 
@@ -296,34 +237,31 @@ export default function PortfolioPage() {
       <TechOrb className="bottom-[-120px] left-1/3 h-72 w-72 bg-fuchsia-500/20" />
 
       <header className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${scrolled ? 'backdrop-blur-lg bg-[color:var(--card)]/72 border-b border-white/10 shadow-[0_10px_30px_rgba(2,6,23,0.6)]' : 'bg-transparent'} `}>
-        <div className={`relative mx-auto flex max-w-7xl items-center justify-between px-6 md:px-10 lg:px-16 ${scrolled ? 'py-2' : 'py-3'} transition-all duration-300`}> 
-          <a href="#home" className="group flex items-center gap-3">
+        <div className={`mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 sm:px-6 lg:px-8 ${scrolled ? 'py-2' : 'py-3'} transition-all duration-300`}>
+          <a href="#home" className="group flex min-w-0 items-center gap-3">
             <span className="grid h-12 w-auto min-w-[68px] place-items-center rounded-2xl border border-border bg-[color:var(--card)]/60 px-3 text-sm font-semibold text-foreground shadow-glow transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:border-[color:var(--accent)]/40 group-hover:bg-[color:var(--popover)]/60">
               Pranshu
             </span>
-            <div className="hidden sm:flex flex-col leading-tight">
+            <div className="hidden min-w-0 flex-col leading-tight sm:flex">
               <p className="text-sm font-semibold tracking-[0.14em] text-foreground/90">Pranshu Dwivedi</p>
               <p className="text-xs uppercase tracking-[0.22em] text-foreground/40">Backend Developer</p>
             </div>
           </a>
 
-          {/* Centered nav for desktop */}
-          <div className="pointer-events-none absolute inset-y-0 left-1/2 hidden -translate-x-1/2 md:flex items-center">
-            <nav className="pointer-events-auto flex items-center gap-3 max-w-lg rounded-full border border-border bg-[color:var(--popover)]/60 p-1.5 px-3 backdrop-blur-xl">
+          <nav className="hidden items-center gap-1 rounded-full border border-border bg-[color:var(--popover)]/60 p-1.5 px-2 backdrop-blur-xl lg:flex">
               {navItems.map((item) => (
-                <a key={item.label} href={item.href} className="rounded-full px-4 md:px-5 py-2 text-sm text-foreground/70 transition-colors duration-180 hover:bg-white/6 hover:text-white">
+                <a key={item.label} href={item.href} className="rounded-full px-2.5 py-2 text-sm text-foreground/70 transition-colors duration-180 hover:bg-white/6 hover:text-white xl:px-3">
                   {item.label}
                 </a>
               ))}
-            </nav>
-          </div>
+          </nav>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center justify-end gap-3">
+            <div className="hidden lg:flex items-center gap-4">
               <ResumeMenu />
             </div>
 
-            <div className="md:hidden flex items-center">
+            <div className="flex items-center lg:hidden">
               <button aria-label="Toggle navigation" className="p-2 rounded-full" onClick={() => setMobileOpen((v) => !v)} aria-expanded={mobileOpen}>
                 <Menu className="h-5 w-5 text-foreground/80" />
               </button>
@@ -331,14 +269,14 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">{mobileOpen ? <MobileNav onNavigate={() => setMobileOpen(false)} /> : null}</div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{mobileOpen ? <MobileNav onNavigate={() => setMobileOpen(false)} /> : null}</div>
       </header>
 
       {/* spacer to offset fixed header so content isn't hidden underneath */}
       <div className="h-16 md:h-20" aria-hidden />
 
       <main>
-        <section id="home" className="relative mx-auto min-h-[calc(100vh-88px)] max-w-7xl px-6 md:px-10 lg:px-16 py-12 sm:py-16 lg:py-20">
+        <section id="home" className="relative mx-auto min-h-[calc(100vh-88px)] max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
             <motion.div initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={reduceMotion ? {} : { opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="relative z-10 flex flex-col space-y-6 max-w-xl">
               <div className="flex flex-col items-start gap-3">
@@ -372,7 +310,7 @@ export default function PortfolioPage() {
               </div>
 
               <div className="mt-2 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-                <Button asChild size="lg" className="group w-full sm:w-auto h-12 flex items-center justify-center">
+                <Button asChild size="lg" className="group h-12 min-w-[8rem] w-full justify-center sm:w-auto">
                   <a href="#projects">
                     View Projects
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -380,7 +318,7 @@ export default function PortfolioPage() {
                 </Button>
 
                 <div className="w-full sm:w-auto">
-                  <ResumeMenu />
+                  <ResumeMenu stacked />
                 </div>
               </div>
             </motion.div>
@@ -399,7 +337,7 @@ export default function PortfolioPage() {
                     </div>
 
                     <CardContent className="grid gap-6 p-6">
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-wrap items-center gap-4">
                         <div className="grid h-16 w-16 place-items-center rounded-3xl bg-[linear-gradient(135deg,rgba(129,140,248,0.95),rgba(34,211,238,0.95))] text-lg font-semibold text-white shadow-[0_0_45px_rgba(34,211,238,0.25)]">
                           PD
                         </div>
@@ -407,7 +345,7 @@ export default function PortfolioPage() {
                           <p className="text-lg font-semibold text-white">Pranshu Dwivedi</p>
                           <p className="text-sm text-cyan-200/80">@backend.dev</p>
                         </div>
-                        <div className="ml-auto inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200 sm:ml-auto">
                           <span className="h-2 w-2 rounded-full bg-emerald-300" />
                           Available
                         </div>
@@ -478,7 +416,7 @@ export default function PortfolioPage() {
                       <p className="mt-1 text-xs uppercase tracking-[0.24em] text-white/40">DSA solved</p>
                     </div>
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                      <span className="text-2xl font-semibold tabular-nums text-white">2</span>
+                      <span className="text-2xl font-semibold tabular-nums text-white">3+</span>
                       <p className="mt-1 text-xs uppercase tracking-[0.24em] text-white/40">Projects</p>
                     </div>
                   </div>
@@ -574,12 +512,12 @@ export default function PortfolioPage() {
                 <div className={`absolute -inset-px rounded-[2rem] bg-gradient-to-br ${project.accent} opacity-0 blur-xl transition duration-500 group-hover:opacity-100`} />
                 <Card className="relative h-full overflow-hidden border-white/10 bg-slate-950/60 transition duration-300 group-hover:-translate-y-1 group-hover:border-white/15">
                   <CardContent className="p-6 sm:p-8">
-                    <div className="flex gap-6">
+                    <div className="flex flex-col gap-6 sm:flex-row">
                       <div className={`flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${project.accent} text-white text-2xl font-bold`}>
                         {project.name.split(' ').map((s) => s[0]).slice(0, 2).join('')}
                       </div>
 
-                      <div className="flex-1">
+                      <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-4">
                           <div>
                             <h3 className="text-2xl font-semibold text-white">{project.name}</h3>
@@ -638,31 +576,30 @@ export default function PortfolioPage() {
               </CardContent>
             </Card>
 
-            <div className="mt-6 grid w-full gap-4 sm:grid-cols-2 items-start">
-              <div />
-              <div className="flex w-full justify-end items-start gap-3">
-                <Button asChild size="lg" className="group w-full max-w-xs justify-center">
-                  <a href="#projects">
-                    View Projects
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Button>
-                <ResumeMenu stacked />
-              </div>
-            </div>
-
             {dsaPlatforms.map((platform) => (
-              <Card key={platform.name} className="h-full overflow-hidden border-white/10 bg-white/5">
-                <div className={`h-1 bg-gradient-to-r ${platform.tone}`} />
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-semibold text-white">{platform.name}</span>
-                    <TerminalSquare className="h-5 w-5 text-cyan-200" />
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-white/60">{platform.subtitle}</p>
-                </CardContent>
-              </Card>
+              <a key={platform.name} href={platform.url} target="_blank" rel="noreferrer" className="group block h-full" aria-label={`Open ${platform.name} profile`}>
+                <Card className="h-full overflow-hidden border-white/10 bg-white/5 transition duration-300 group-hover:-translate-y-1 group-hover:border-white/20">
+                  <div className={`h-1 bg-gradient-to-r ${platform.tone}`} />
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-semibold text-white">{platform.name}</span>
+                      <TerminalSquare className="h-5 w-5 text-cyan-200 transition group-hover:text-white" />
+                    </div>
+                    <p className="mt-4 text-sm leading-7 text-white/60">{platform.subtitle}</p>
+                  </CardContent>
+                </Card>
+              </a>
             ))}
+
+            <div className="relative z-20 col-span-full flex w-full flex-wrap items-start justify-end gap-3 pt-1">
+              <Button asChild size="lg" className="group h-12 min-w-[8rem] justify-center">
+                <a href="#projects">
+                  View Projects
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+              <ResumeMenu />
+            </div>
           </div>
         </SectionBlock>
 
@@ -689,12 +626,6 @@ export default function PortfolioPage() {
           <SectionHeading eyebrow="Contact" title={<><span className="bg-[linear-gradient(135deg,#fff_0%,#67e8f9_55%,#a78bfa_100%)] bg-clip-text text-transparent">Let’s build something beautiful and useful</span></>} description="Reach out for backend roles, internships, collaborations, or if you just want to talk architecture." />
           <div className="mt-6 grid gap-6 md:grid-cols-2 md:items-start">
             <div className="space-y-5">
-              <div className="rounded-3xl border border-white/8 bg-white/5 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.25)]">
-                <p className="text-base leading-7 text-white/80">
-                  Whether it's discussing DSA problems, mathematical concepts, or building powerful web applications — I'm all ears. Contact me for a free consultation.
-                </p>
-              </div>
-
               <Card className="border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(15,23,42,0.22)]">
                 <CardContent className="p-5 sm:p-6">
                   <p className="text-xs uppercase tracking-[0.28em] text-white/35">Social</p>
@@ -729,8 +660,13 @@ export default function PortfolioPage() {
               </Card>
             </div>
 
-            <div className="flex w-full items-center justify-center">
-              <div className="w-full max-w-lg">
+            <div className="flex w-full flex-col gap-5">
+              <div className="rounded-3xl border border-white/8 bg-white/5 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.25)]">
+                <p className="text-base leading-7 text-white/80">
+                  Whether it's discussing DSA problems, mathematical concepts, or building powerful web applications — I'm all ears. Contact me for a free consultation.
+                </p>
+              </div>
+
                 <Card className="border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(15,23,42,0.22)]">
                   <CardContent className="p-6 sm:p-8">
                     <div className="mb-5">
@@ -763,7 +699,6 @@ export default function PortfolioPage() {
                     </form>
                   </CardContent>
                 </Card>
-              </div>
             </div>
           </div>
         </SectionBlock>
@@ -771,8 +706,7 @@ export default function PortfolioPage() {
 
       <footer className="border-t border-white/10 bg-slate-950/60">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-center sm:px-6 lg:px-8">
-          <p className="text-sm text-white/45">Made with chai ☕ and a dash of code — handcrafted for curious minds.</p>
-          <p className="text-xs uppercase tracking-[0.26em] text-white/30">Pranshu Dwivedi · Backend Developer</p>
+          <p className="text-xs uppercase tracking-[0.26em] text-white/30">Pranshu Dwivedi</p>
         </div>
       </footer>
     </div>
@@ -781,7 +715,7 @@ export default function PortfolioPage() {
 
 function SectionBlock({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+    <section id={id} className="scroll-mt-24 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
       {children}
     </section>
   );
